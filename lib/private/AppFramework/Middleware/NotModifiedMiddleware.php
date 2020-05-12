@@ -40,7 +40,7 @@ class NotModifiedMiddleware extends Middleware {
 
 	public function afterController($controller, $methodName, Response $response) {
 		$etagHeader = $this->request->getHeader('IF_NONE_MATCH');
-		if ($etagHeader !== '' && $response->getETag() !== null && trim(trim($etagHeader), '"') === $response->getETag()) {
+		if ($etagHeader !== '' && $response->getETag() !== null && trim($etagHeader) === '"' . $response->getETag() . '"') {
 			$response->setStatus(Http::STATUS_NOT_MODIFIED);
 			return $response;
 		}
